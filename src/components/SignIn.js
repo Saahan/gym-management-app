@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { app } from "../firebase.js";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { useNavigate } from "react-router-dom";
 import "../styles/main.css";
 
-export default function SignIn(props) {
+export default function SignIn() {
   const auth = getAuth(app);
   const navigate = useNavigate();
+  const [errorText, setErrorText] = useState("");
 
   function handleSignIn(e) {
     e.preventDefault();
@@ -20,7 +21,7 @@ export default function SignIn(props) {
       .then(() => {
         navigate("/dashboard");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setErrorText(err.code));
   }
 
   return (
@@ -70,6 +71,7 @@ export default function SignIn(props) {
           Don't have an account?
         </button>
       </div>
+      <span style={{color:"red"}}>{errorText}</span>
     </div>
   );
 }

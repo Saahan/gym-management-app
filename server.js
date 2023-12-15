@@ -21,6 +21,7 @@ async function main() {
 }
 
 const gymuserSchema = new mongoose.Schema({
+  uid: String,
   email: String,
   fname: String,
   lname: String,
@@ -28,9 +29,33 @@ const gymuserSchema = new mongoose.Schema({
   plan: String,
   bills: Array,
   billNotifications: Number,
+  accountType: String,
 });
 
 const gymUsers = mongoose.model("gymusers", gymuserSchema);
+
+app.post("/api/signup", (req, res) => {
+  let userDataObj = new gymUsers({
+    uid: req.body.uid,
+    email: req.body.email.toLowerCase(),
+    fname: req.body.fname,
+    lname: req.body.lname,
+    phoneNumber: req.body.phoneNumber,
+    accountType: req.body.accountType,
+    plan: "",
+    bills: [],
+    billNotifications: 0,
+  });
+
+  userDataObj.save();
+});
+
+app.get("/api/userdetails", (req, res) => {
+  let user = req.query.user;
+  gymUsers.find({ uid: user }).then((docs) => {
+    res.send(docs);
+  });
+});
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

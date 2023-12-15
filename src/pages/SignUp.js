@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import "../styles/main.css";
 import { useNavigate } from "react-router-dom";
 import validateUserData from "../Functions/validateUserData.js";
+import axios from "axios";
 
 export default function SignUp() {
   const auth = getAuth(app);
@@ -24,13 +25,32 @@ export default function SignUp() {
       password2: e.target[5].value,
     };
 
+    //console.log(userData);
+
     let isValidated = validateUserData(userData)[0];
 
     if (isValidated) {
       createUserWithEmailAndPassword(auth, userData.email, userData.password)
-        .then((userCredential) => {}) //do a post request here to post user data to database
+        .then((userCredential) => {
+          //console.log(userCredential);
+          axios({
+            method: "post",
+            url: "http://localhost:5000/api/signup",
+            data: {
+              uid: userCredential.user.uid,
+              fname: userData.fname,
+              lname: userData.lname,
+              email: userData.email,
+              phoneNumber: userData.phoneNumber,
+              accountType: "user",
+            },
+            headers: { "content-type": "application/json" },
+          }).then(navigate("/signup-successful"));
+        }) //do a post request here to post user data to database
         .catch((err) => {
-          console.log(err);
+          const error = err.code;
+          console.log(error);
+          setValidationText(error);
         });
     } else {
       setValidationText(validateUserData(userData)[1]);

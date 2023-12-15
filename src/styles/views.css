@@ -1,0 +1,26 @@
+.container {
+  padding: 80px 100px 0px 100px;
+}
+
+.profile-div {
+  width: 350px;
+  padding: 20px;
+}
+
+.card-col {
+  display: inline !important;
+  max-width: 20rem !important;
+  margin-bottom: 20px;
+  padding: 20px !important;
+}
+
+.card-header {
+  font-size: large !important;
+  text-align: center !important;
+  background-color: rgb(209, 100, 50) !important;
+  color: white;
+}
+
+.card-body {
+  background-color: #f1f1f1 !important;
+}
