@@ -18,21 +18,33 @@ export default function UserDashboard(props) {
       <NavBar />
       <div>
         <div className="sidebar">
-          <div className="user-welcome">Welcome, <br />{props.userData.fname}</div>
+          <div className="user-welcome">
+            Welcome, <br />
+            {props.userData.fname}
+          </div>
           <hr />
-          <div className={view === "Profile" ? "active" : undefined} onClick={selectView}>
+          <div
+            className={view === "Profile" ? "active" : undefined}
+            onClick={selectView}
+          >
             Profile
           </div>
-          <div className={view === "Plans" ? "active" : undefined} onClick={selectView}>
+          <div
+            className={view === "Plans" ? "active" : undefined}
+            onClick={selectView}
+          >
             Plans
           </div>
-          <div className={view === "About" ? "active" : undefined} onClick={selectView}>
+          <div
+            className={view === "About" ? "active" : undefined}
+            onClick={selectView}
+          >
             About
           </div>
         </div>
         <div className="main-screen">
-          {view === "Profile" && <Profile userData={props.userData}/>}
-          {view === "Plans" && <Plans />}
+          {view === "Profile" && <Profile userData={props.userData} />}
+          {view === "Plans" && <Plans userData={props.userData} />}
           {view === "About" && <About />}
         </div>
       </div>

@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 
-export default function Plans() {
+export default function Plans(props) {
   return (
     <div className="container">
     <h1>Plans</h1><hr />
@@ -56,7 +56,8 @@ export default function Plans() {
           </Card>
         </Col>
       </Row>
-      <p>* Please contact the manager to get a membership and enroll in a plan</p>
+      {props.userData.accountType === "member" && <p>* Please contact the manager to get a plan</p>}
+      {props.userData.accountType === "user" && <p>* Please contact the manager to get a membership and enroll in a plan</p>}
     </div>
   );
 }

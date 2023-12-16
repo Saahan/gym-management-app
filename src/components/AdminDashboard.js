@@ -1,7 +1,77 @@
-import React from 'react'
+import React, { useState } from "react";
+import NavBar from "./NavBar.js";
+import "../styles/dashboard.css";
+import Profile from "./Profile.js";
+import CreateBills from "./CreateBills.js";
+import AssignPlans from "./AssignPlans.js";
+import MembersList from "./MembersList.js";
+import AddMembers from "./AddMembers.js";
+import SupplementStore from "./SupplementStore.js";
 
-export default function AdminDashboard() {
+export default function AdminDashboard(props) {
+  const [view, setView] = useState("Profile");
+
+  function selectView(e) {
+    console.log(e.target.innerHTML);
+    setView(e.target.innerHTML);
+  }
+
   return (
-    <div>AdminDashboard</div>
-  )
+    <div>
+      <NavBar />
+      <div>
+        <div className="sidebar">
+          <div className="user-welcome">
+            Welcome, <br />
+            {props.userData.fname}
+          </div>
+          <hr />
+          <div
+            className={view === "Profile" ? "active" : undefined}
+            onClick={selectView}
+          >
+            Profile
+          </div>
+          <div
+            className={view === "Members" ? "active" : undefined}
+            onClick={selectView}
+          >
+            Members
+          </div>
+          <div
+            className={view === "Add Members" ? "active" : undefined}
+            onClick={selectView}
+          >
+            Add Members
+          </div>
+          <div
+            className={view === "Create Bills" ? "active" : undefined}
+            onClick={selectView}
+          >
+            Create Bills
+          </div>
+          <div
+            className={view === "Assign Plans/Diet" ? "active" : undefined}
+            onClick={selectView}
+          >
+            Assign Plans/Diet
+          </div>
+          <div
+            className={view === "Store Management" ? "active" : undefined}
+            onClick={selectView}
+          >
+            Store Management
+          </div>
+        </div>
+        <div className="main-screen">
+          {view === "Profile" && <Profile userData={props.userData} />}
+          {view === "Members" && <MembersList />}
+          {view === "Add Members" && <AddMembers />}
+          {view === "Create Bills" && <CreateBills />}
+          {view === "Assign Plans/Diet" && <AssignPlans />}
+          {view === "Store Management" && <SupplementStore />}
+        </div>
+      </div>
+    </div>
+  );
 }
