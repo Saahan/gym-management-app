@@ -24,3 +24,45 @@
 .card-body {
   background-color: #f1f1f1 !important;
 }
+
+/* Members List Styles */
+
+.members-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.members-table td,
+.members-table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.members-table tr:nth-child(even) {
+  background-color: #f1f1f1;
+}
+
+.members-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: rgb(209, 100, 50);
+  color: white;
+}
+
+.btn-members {
+  background: rgb(209, 100, 50);
+  border: none;
+  width: 80px;
+  color: white;
+  margin-right: 10px;
+}
+
+.btn-add-member {
+  background: rgb(209, 100, 50);
+  border: none;
+  width: 120px;
+  color: white;
+  margin-right: 10px;
+}
+

@@ -57,6 +57,36 @@ app.get("/api/userdetails", (req, res) => {
   });
 });
 
+app.get("/api/memberdetails", (req, res) => {
+  gymUsers.find({ accountType: "member" }).then((docs) => {
+    res.send(docs);
+  });
+});
+
+app.get("/api/userlist", (req, res) => {
+  gymUsers.find({ accountType: "user" }).then((docs) => {
+    res.send(docs);
+  });
+});
+
+app.put("/api/allotmembership", (req, res) => {
+  let userID = req.body.uid;
+  gymUsers
+    .findOneAndUpdate({ uid: userID }, { accountType: "member" })
+    .then((docs) => {
+      res.send(docs);
+    });
+});
+
+app.put("/api/cancelmembership", (req, res) => {
+  let userID = req.body.uid;
+  gymUsers
+    .findOneAndUpdate({ uid: userID }, { accountType: "user" })
+    .then((docs) => {
+      res.send(docs);
+    });
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

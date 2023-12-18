@@ -7,6 +7,7 @@ import AssignPlans from "./AssignPlans.js";
 import MembersList from "./MembersList.js";
 import AddMembers from "./AddMembers.js";
 import SupplementStore from "./SupplementStore.js";
+import ReactLoading from "react-loading";
 
 export default function AdminDashboard(props) {
   const [view, setView] = useState("Profile");
@@ -14,6 +15,13 @@ export default function AdminDashboard(props) {
   function selectView(e) {
     console.log(e.target.innerHTML);
     setView(e.target.innerHTML);
+  }
+
+  function refresh(e) {
+    setView("");
+    setTimeout(() => {
+      setView(e);
+    }, 1000);
   }
 
   return (
@@ -65,11 +73,18 @@ export default function AdminDashboard(props) {
         </div>
         <div className="main-screen">
           {view === "Profile" && <Profile userData={props.userData} />}
-          {view === "Members" && <MembersList />}
-          {view === "Add Members" && <AddMembers />}
+          {view === "Members" && <MembersList refresh={refresh} />}
+          {view === "Add Members" && <AddMembers refresh={refresh} />}
           {view === "Create Bills" && <CreateBills />}
           {view === "Assign Plans/Diet" && <AssignPlans />}
           {view === "Store Management" && <SupplementStore />}
+          {view === "" && (
+            <ReactLoading
+              type="bubbles"
+              color="rgb(209, 100, 50)"
+              className="loading"
+            />
+          )}
         </div>
       </div>
     </div>

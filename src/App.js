@@ -46,7 +46,7 @@ export default function App() {
     <BrowserRouter>
       {isAuthenticated === null && (
         <ReactLoading
-          type="spin"
+          type="bubbles"
           color="rgb(209, 100, 50)"
           className="loading"
         />
