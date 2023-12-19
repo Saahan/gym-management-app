@@ -28,11 +28,21 @@ const gymuserSchema = new mongoose.Schema({
   phoneNumber: String,
   plan: String,
   bills: Array,
-  billNotifications: Number,
+  notifications: Array,
   accountType: String,
 });
 
+const userdietSchema = new mongoose.Schema({
+  uid: String,
+  proteinAmount: String,
+  breakfast: String,
+  lunch: String,
+  dinner: String,
+  comments: String,
+});
+
 const gymUsers = mongoose.model("gymusers", gymuserSchema);
+const userDiets = mongoose.model("userdiets", userdietSchema);
 
 app.post("/api/signup", (req, res) => {
   let userDataObj = new gymUsers({
@@ -44,7 +54,7 @@ app.post("/api/signup", (req, res) => {
     accountType: req.body.accountType,
     plan: "",
     bills: [],
-    billNotifications: 0,
+    notifications: [],
   });
 
   userDataObj.save();
@@ -82,6 +92,23 @@ app.put("/api/cancelmembership", (req, res) => {
   let userID = req.body.uid;
   gymUsers
     .findOneAndUpdate({ uid: userID }, { accountType: "user" })
+    .then((docs) => {
+      res.send(docs);
+    });
+});
+
+app.put("/api/updatememberdetails", (req, res) => {
+  let userData = req.body;
+  console.log(userData);
+  gymUsers
+    .findOneAndUpdate(
+      { uid: userData.uid },
+      {
+        fname: userData.fname,
+        lname: userData.lname,
+        phoneNumber: userData.phoneNumber,
+      }
+    )
     .then((docs) => {
       res.send(docs);
     });

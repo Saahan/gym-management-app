@@ -66,3 +66,32 @@
   margin-right: 10px;
 }
 
+.btn-members:hover {
+  background: #555;
+}
+
+.btn-add-member:hover {
+  background: #555;
+}
+
+.edit-member-form input {
+  width: 250px;
+  margin: 10px;
+  padding: 5px;
+}
+
+.edit-member-form select {
+  width: 250px;
+  margin: 10px;
+  padding: 5px;
+}
+
+.edit-member-form textarea {
+  width: 250px;
+  margin: 10px;
+  padding: 5px;
+}
+
+.edit-member-form label {
+  width: 130px;
+}
