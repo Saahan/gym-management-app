@@ -15,7 +15,7 @@ export default function MembersList(props) {
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/memberdetails").then((docs) => {
-      console.log(docs.data);
+      console.log("member list data:", docs.data);
       setMemberData(docs.data);
     });
   }, []);
@@ -110,6 +110,7 @@ function EditModal(props) {
         fname: e.target[1].value,
         lname: e.target[2].value,
         phoneNumber: e.target[3].value,
+        plan: e.target[4].value,
         uid: uid,
       },
       headers: { "content-type": "application/json" },
@@ -162,6 +163,13 @@ function EditModal(props) {
             defaultValue={props.data.phoneNumber}
             maxLength={10}
           ></input>
+          <label htmlFor="plan">Plan:</label>
+          <select defaultValue={props.data.plan}>
+            <option value="">Unassigned</option>
+            <option value="Trial">Trial</option>
+            <option value="Monthly">Monthly</option>
+            <option value="Quarterly">Quarterly</option>
+          </select>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={props.handleClose}>

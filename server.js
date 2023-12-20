@@ -57,7 +57,17 @@ app.post("/api/signup", (req, res) => {
     notifications: [],
   });
 
+  let userDietObj = new userDiets({
+    uid: req.body.uid,
+    breakfast: "",
+    lunch: "",
+    dinner: "",
+    proteinAmount: "",
+    comments: "",
+  });
+
   userDataObj.save();
+  userDietObj.save();
 });
 
 app.get("/api/userdetails", (req, res) => {
@@ -75,6 +85,12 @@ app.get("/api/memberdetails", (req, res) => {
 
 app.get("/api/userlist", (req, res) => {
   gymUsers.find({ accountType: "user" }).then((docs) => {
+    res.send(docs);
+  });
+});
+
+app.get("/api/dietdetails", (req, res) => {
+  userDiets.find({ uid: req.query.uid }).then((docs) => {
     res.send(docs);
   });
 });
@@ -99,7 +115,7 @@ app.put("/api/cancelmembership", (req, res) => {
 
 app.put("/api/updatememberdetails", (req, res) => {
   let userData = req.body;
-  console.log(userData);
+  //console.log(userData);
   gymUsers
     .findOneAndUpdate(
       { uid: userData.uid },
@@ -107,6 +123,26 @@ app.put("/api/updatememberdetails", (req, res) => {
         fname: userData.fname,
         lname: userData.lname,
         phoneNumber: userData.phoneNumber,
+        plan: userData.plan
+      }
+    )
+    .then((docs) => {
+      res.send(docs);
+    });
+});
+
+app.put("/api/updatedietdetails", (req, res) => {
+  let dietData = req.body;
+  //console.log(dietData);
+  userDiets
+    .findOneAndUpdate(
+      { uid: dietData.uid },
+      {
+        breakfast: dietData.breakfast,
+        lunch: dietData.lunch,
+        dinner: dietData.dinner,
+        proteinAmount: dietData.proteinAmount,
+        comments: dietData.comments,
       }
     )
     .then((docs) => {

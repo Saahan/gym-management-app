@@ -9,13 +9,14 @@ export default function AssignPlans() {
   const [memberData, setMemberData] = useState(null);
   const [show, setShow] = useState(false);
   const [modalData, setModalData] = useState([]);
+  const [modalDietData, setModalDietData] = useState([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/memberdetails").then((docs) => {
-      console.log(docs.data);
+      console.log("user details useffect", docs.data);
       setMemberData(docs.data);
     });
   }, []);
@@ -23,6 +24,17 @@ export default function AssignPlans() {
   function dietDetails(member) {
     handleShow();
     setModalData(member);
+    setModalDietData([]);
+    axios
+      .get("http://localhost:5000/api/dietdetails", {
+        params: {
+          uid: member.uid,
+        },
+      })
+      .then((docs) => {
+        console.log("modal diet data", docs.data);
+        setModalDietData(docs.data[0]);
+      });
   }
 
   return (
@@ -50,7 +62,6 @@ export default function AssignPlans() {
                     >
                       Diet
                     </button>
-                    <button className="btn-members">Plan</button>
                   </td>
                 </tr>
               );
@@ -64,12 +75,34 @@ export default function AssignPlans() {
           className="loading"
         />
       )}
-      <DietModal show={show} handleClose={handleClose} modalData={modalData} />
+      <DietModal
+        show={show}
+        handleClose={handleClose}
+        modalData={modalData}
+        modalDietData={modalDietData}
+      />
     </div>
   );
 }
 
 function DietModal(props) {
+  function handleSubmit(e) {
+    e.preventDefault();
+    axios({
+      method: "put",
+      url: "http://localhost:5000/api/updatedietdetails",
+      data: {
+        uid: props.modalData.uid,
+        breakfast: e.target[1].value,
+        lunch: e.target[2].value,
+        dinner: e.target[3].value,
+        proteinAmount: e.target[4].value,
+        comments: e.target[5].value,
+      },
+      headers: { "content-type": "application/json" },
+    }).then((res) => console.log(res));
+  }
+
   return (
     <Modal
       show={props.show}
@@ -83,7 +116,7 @@ function DietModal(props) {
       >
         <Modal.Title>Diet Details Entry</Modal.Title>
       </Modal.Header>
-      <form className="edit-member-form">
+      <form className="edit-member-form" onSubmit={handleSubmit}>
         <Modal.Body>
           <label htmlFor="email">For: </label>
           <input
@@ -94,18 +127,39 @@ function DietModal(props) {
           ></input>
           <br />
           <label htmlFor="breakfast">Breakfast: </label>
-          <input type="text" id="breakfast"></input> <br />
+          <input
+            type="text"
+            id="breakfast"
+            defaultValue={props.modalDietData && props.modalDietData.breakfast}
+          ></input>{" "}
+          <br />
           <label htmlFor="lunch">Lunch: </label>
-          <input type="text" id="lunch"></input> <br />
+          <input
+            type="text"
+            id="lunch"
+            defaultValue={props.modalDietData && props.modalDietData.lunch}
+          ></input>{" "}
+          <br />
           <label htmlFor="dinner">Dinner: </label>
-          <input type="text" id="dinner"></input>
+          <input
+            type="text"
+            id="dinner"
+            defaultValue={props.modalDietData && props.modalDietData.dinner}
+          ></input>
           <label htmlFor="protein">Protein(gms/day): </label>
-          <input type="text" id="protein"></input>
+          <input
+            type="text"
+            id="protein"
+            defaultValue={
+              props.modalDietData && props.modalDietData.proteinAmount
+            }
+          ></input>
           <label htmlFor="comments">Comments: </label>
           <textarea
             id="comments"
             rows={3}
             style={{ verticalAlign: "middle" }}
+            defaultValue={props.modalDietData && props.modalDietData.comments}
           ></textarea>
         </Modal.Body>
         <Modal.Footer>

@@ -59,10 +59,10 @@ export default function AdminDashboard(props) {
             Create Bills
           </div>
           <div
-            className={view === "Plans/Diet" ? "active" : undefined}
+            className={view === "Diet" ? "active" : undefined}
             onClick={selectView}
           >
-            Plans/Diet
+            Diet
           </div>
           <div
             className={view === "Store Management" ? "active" : undefined}
@@ -76,7 +76,7 @@ export default function AdminDashboard(props) {
           {view === "Members" && <MembersList refresh={refresh} />}
           {view === "Add Members" && <AddMembers refresh={refresh} />}
           {view === "Create Bills" && <CreateBills />}
-          {view === "Plans/Diet" && <AssignPlans />}
+          {view === "Diet" && <AssignPlans />}
           {view === "Store Management" && <SupplementStore />}
           {view === "" && (
             <ReactLoading
