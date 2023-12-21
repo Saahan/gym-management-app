@@ -5,6 +5,7 @@ export default function Profile(props) {
   return (
     <div className="container">
       <h1>Profile</h1> <hr />
+      <h5>Personal Details:</h5>
       <div className="profile-div">
         <p>Name: {props.userData.fname + " " + props.userData.lname}</p>
         <p>Email: {props.userData.email}</p>
@@ -23,6 +24,18 @@ export default function Profile(props) {
           {props.userData.plan === "" ? "N/A" : props.userData.plan}
         </p>
       </div>
+      {props.userData.accountType === "member" && props.dietData !== null && (
+        <div>
+          <h5>Diet Details:</h5>
+          <div className="profile-div">
+            <p>Breakfast: {props.dietData.breakfast}</p>
+            <p>Lunch: {props.dietData.lunch}</p>
+            <p>Dinner: {props.dietData.dinner}</p>
+            <p>Proteins (gms/day): {props.dietData.proteinAmount}</p>
+            <p>Comments: {props.dietData.comments}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

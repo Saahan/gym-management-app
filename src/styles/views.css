@@ -95,3 +95,18 @@
 .edit-member-form label {
   width: 130px;
 }
+
+.bills-div {
+  border: 1px solid black;
+  padding: 20px 20px 10px 20px;
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+.bills-div ul {
+  border-top: 2px dashed black;
+  border-bottom: 2px dashed black;
+  list-style: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 var cors = require("cors");
+var _ = require("lodash");
 
 const app = express();
 
@@ -70,6 +71,31 @@ app.post("/api/signup", (req, res) => {
   userDietObj.save();
 });
 
+app.post("/api/addbillitem", (req, res) => {
+  //console.log(req.body);
+  let today = new Date();
+
+  let notification = {
+    message: `A bill with invoice number ${req.body.invoiceNumber} was added`,
+    date: today,
+    id: req.body.invoiceNumber,
+  };
+
+  let billObj = {
+    amount: req.body.amount,
+    date: req.body.date,
+    invoiceNumber: req.body.invoiceNumber,
+    comment: req.body.comments,
+  };
+
+  gymUsers
+    .findOneAndUpdate(
+      { uid: req.body.uid },
+      { $push: { bills: billObj, notifications: notification } }
+    )
+    .then((docs) => res.send(docs));
+});
+
 app.get("/api/userdetails", (req, res) => {
   let user = req.query.user;
   gymUsers.find({ uid: user }).then((docs) => {
@@ -95,6 +121,12 @@ app.get("/api/dietdetails", (req, res) => {
   });
 });
 
+app.get("/api/usernotifications", (req, res) => {
+  gymUsers.find({ uid: req.query.uid }).then((docs) => {
+    res.send(docs);
+  });
+});
+
 app.put("/api/allotmembership", (req, res) => {
   let userID = req.body.uid;
   gymUsers
@@ -107,7 +139,16 @@ app.put("/api/allotmembership", (req, res) => {
 app.put("/api/cancelmembership", (req, res) => {
   let userID = req.body.uid;
   gymUsers
-    .findOneAndUpdate({ uid: userID }, { accountType: "user" })
+    .findOneAndUpdate({ uid: userID }, { accountType: "user", plan: "" })
+    .then((docs) => {
+      res.send(docs);
+    });
+});
+
+app.put("/api/clearnotifications", (req, res) => {
+  let userID = req.body.uid;
+  gymUsers
+    .findOneAndUpdate({ uid: userID }, { notifications: [] })
     .then((docs) => {
       res.send(docs);
     });
@@ -123,7 +164,7 @@ app.put("/api/updatememberdetails", (req, res) => {
         fname: userData.fname,
         lname: userData.lname,
         phoneNumber: userData.phoneNumber,
-        plan: userData.plan
+        plan: userData.plan,
       }
     )
     .then((docs) => {
@@ -133,7 +174,7 @@ app.put("/api/updatememberdetails", (req, res) => {
 
 app.put("/api/updatedietdetails", (req, res) => {
   let dietData = req.body;
-  //console.log(dietData);
+
   userDiets
     .findOneAndUpdate(
       { uid: dietData.uid },
@@ -143,10 +184,40 @@ app.put("/api/updatedietdetails", (req, res) => {
         dinner: dietData.dinner,
         proteinAmount: dietData.proteinAmount,
         comments: dietData.comments,
-      }
+      },
+      { returnDocument: "before" }
     )
     .then((docs) => {
-      res.send(docs);
+      let comparableDocs = {
+        uid: docs.uid,
+        breakfast: docs.breakfast,
+        lunch: docs.lunch,
+        dinner: docs.dinner,
+        proteinAmount: docs.proteinAmount,
+        comments: docs.comments,
+      };
+
+      //console.log(comparableDocs, dietData);
+      if (_.isEqual(comparableDocs, dietData)) {
+        console.log("same, do not send notification");
+      } else {
+        console.log("not same");
+        let today = new Date();
+        let id = Math.floor(Math.random() * (1000 - 1 + 1)) + 1;
+
+        let notification = {
+          message: `Diet details were changed`,
+          date: today,
+          id: id,
+        };
+
+        gymUsers
+          .findOneAndUpdate(
+            { uid: docs.uid },
+            { $push: { notifications: notification } }
+          )
+          .then(console.log("notification pushed"));
+      }
     });
 });
 

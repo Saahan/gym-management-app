@@ -7,7 +7,11 @@ import Card from "react-bootstrap/Card";
 export default function Plans(props) {
   return (
     <div className="container">
-    <h1>Plans</h1><hr />
+      <h1>Plans</h1>
+      <hr />
+      {props.userData.accountType === "member" && (
+        <h5>Your current plan is: {props.userData.plan}</h5>
+      )}
       <Row>
         <Col sm className="card-col">
           <Card style={{ width: "15rem", height: "16rem" }}>
@@ -56,8 +60,14 @@ export default function Plans(props) {
           </Card>
         </Col>
       </Row>
-      {props.userData.accountType === "member" && <p>* Please contact the manager to get a plan</p>}
-      {props.userData.accountType === "user" && <p>* Please contact the manager to get a membership and enroll in a plan</p>}
+      {props.userData.accountType === "member" && (
+        <p>* Please contact the manager to change your plan</p>
+      )}
+      {props.userData.accountType === "user" && (
+        <p>
+          * Please contact the manager to get a membership and enroll in a plan
+        </p>
+      )}
     </div>
   );
 }

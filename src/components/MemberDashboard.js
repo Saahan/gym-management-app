@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "./NavBar.js";
 import "../styles/dashboard.css";
 import Profile from "./Profile.js";
@@ -6,13 +6,38 @@ import Plans from "./Plans.js";
 import About from "./About.js";
 import Notifications from "./Notifications.js";
 import Bills from "./Bills.js";
+import axios from "axios";
 
 export default function MemberDashboard(props) {
   const [view, setView] = useState("Profile");
+  const [dietData, setDietData] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/dietdetails", {
+        params: {
+          uid: props.userData.uid,
+        },
+      })
+      .then((res) => {
+        console.log("diet data", res.data);
+        setDietData(res.data[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [props.userData.uid]);
 
   function selectView(e) {
     console.log(e.target.innerHTML);
     setView(e.target.innerHTML);
+  }
+
+  function refresh(e) {
+    setView("");
+    setTimeout(() => {
+      setView(e);
+    }, 100);
   }
 
   return (
@@ -57,9 +82,11 @@ export default function MemberDashboard(props) {
           </div>
         </div>
         <div className="main-screen">
-          {view === "Profile" && <Profile userData={props.userData} />}
+          {view === "Profile" && (
+            <Profile userData={props.userData} dietData={dietData} />
+          )}
           {view === "Notifications" && (
-            <Notifications userData={props.userData} />
+            <Notifications userData={props.userData} refresh={refresh} />
           )}
           {view === "Bills" && <Bills userData={props.userData} />}
           {view === "Plans" && <Plans userData={props.userData} />}

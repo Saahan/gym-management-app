@@ -39,7 +39,7 @@ export default function AssignPlans() {
 
   return (
     <div className="container">
-      <h1>Plans/Diet Allocation:</h1> <hr />
+      <h1>Diet Allocation:</h1> <hr />
       {memberData !== null ? (
         <table className="members-table">
           <tbody>
