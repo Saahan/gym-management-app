@@ -32,6 +32,7 @@ export default function App() {
             //console.log(res.data);
             setPriveleges(res.data[0].accountType);
             setUserData(res.data[0]);
+            console.log("env file", process.env);
           })
           .catch((err) => {
             console.log(err);

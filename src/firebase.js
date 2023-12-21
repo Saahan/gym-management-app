@@ -7,16 +7,15 @@ import { initializeApp } from "firebase/app";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDvpccKz195mQ06irkO9eemM5t2opQwz8o",
-  authDomain: "gym-manager-app-cf880.firebaseapp.com",
-  projectId: "gym-manager-app-cf880",
-  storageBucket: "gym-manager-app-cf880.appspot.com",
-  messagingSenderId: "360083954051",
-  appId: "1:360083954051:web:efa447ddc7ffb14b1d7eb6",
-  measurementId: "G-WX4CLP8GFZ",
+  apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGINGSENDERID,
+  appId: process.env.REACT_APP_FIREBASE_APPID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENTID,
 };
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 //const analytics = getAnalytics(app);
-
