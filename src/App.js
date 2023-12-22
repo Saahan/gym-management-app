@@ -9,6 +9,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Protected from "./components/Protected.js";
 import ReactLoading from "react-loading";
 import AccountCreated from "./pages/AccountCreated.js";
+import ForgotPassword from "./pages/ForgotPassword.js";
 
 export default function App() {
   const auth = getAuth(app);
@@ -56,6 +57,7 @@ export default function App() {
         <Routes>
           <Route index element={<Main />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route
             path="/signup-successful"
             element={

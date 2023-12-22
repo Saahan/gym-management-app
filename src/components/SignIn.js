@@ -69,9 +69,18 @@ export default function SignIn() {
           }}
         >
           Don't have an account?
+        </button>{" "}
+        <br />
+        <button
+          className="button-signup"
+          onClick={() => {
+            navigate("/forgotpassword");
+          }}
+        >
+          Forgot password?
         </button>
       </div>
-      <span style={{color:"red"}}>{errorText}</span>
+      <span style={{ color: "red" }}>{errorText}</span>
     </div>
   );
 }
