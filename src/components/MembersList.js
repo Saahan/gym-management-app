@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../styles/views.css";
 import axios from "axios";
 import ReactLoading from "react-loading";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import generatePDF from "react-to-pdf";
 
 export default function MembersList(props) {
   const [memberData, setMemberData] = useState(null);
   const [show, setShow] = useState(false);
   const [modalData, setModalData] = useState([]);
+  const targetRef = useRef();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -43,9 +45,16 @@ export default function MembersList(props) {
     <div className="container">
       <h1>Members:</h1>
       <hr />
+      <button
+        style={{ float: "right", marginBottom: "20px" }}
+        className="btn-members"
+        onClick={() => generatePDF(targetRef, { filename: "members.pdf" })}
+      >
+        Save PDF
+      </button>
       <div>
         {memberData !== null ? (
-          <table className="members-table">
+          <table className="members-table" ref={targetRef}>
             <tbody>
               <tr>
                 <th>Name</th>
