@@ -2,15 +2,16 @@
 
 .sidebar {
   margin: 0;
-  padding: 0;
+  padding: 40px 0px 0px 0px;
   width: 15%;
   background-color: #f1f1f1;
   position: fixed;
   height: 100%;
   overflow: auto;
+  top: 0px;
 }
 
-.sidebar div:not(:nth-child(1)) {
+.sidebar div:not(:nth-child(1)):not(:nth-child(2)) {
   display: block;
   color: black;
   padding: 16px;
@@ -20,10 +21,10 @@
 
 .sidebar div.active {
   background-color: rgb(209, 100, 50);
-  color: white;
+  color: white !important;
 }
 
-.sidebar div:hover:not(.active):not(:nth-child(1)) {
+.sidebar div:hover:not(.active):not(:nth-child(1)):not(:nth-child(2)) {
   background-color: #555;
   color: white;
 }
