@@ -32,7 +32,18 @@ export default function AddMembers(props) {
     <div className="container">
       <h1>Gym Guest Accounts:</h1> <hr />
       <div>
-        {userList !== null ? (
+        {userList === null ? (
+          <ReactLoading
+            type="bubbles"
+            color="rgb(209, 100, 50)"
+            className="loading"
+          />
+        ) : userList.length === 0 ? (
+          <p>
+            No guest accounts found, please register users as guests before
+            adding assigning them membership.
+          </p>
+        ) : (
           <table className="members-table">
             <tbody>
               <tr>
@@ -60,12 +71,6 @@ export default function AddMembers(props) {
               })}
             </tbody>
           </table>
-        ) : (
-          <ReactLoading
-            type="bubbles"
-            color="rgb(209, 100, 50)"
-            className="loading"
-          />
         )}
       </div>
     </div>
