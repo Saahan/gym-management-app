@@ -7,7 +7,7 @@ export default function About() {
       <h1>About</h1> <hr />
       <img
         src="/img/generic_gym.jpg"
-        style={{ width: "100%", height: "600px" }}
+        className="generic-gym"
         alt="gym"
       ></img>
       <p>

@@ -8,11 +8,22 @@ import Notifications from "./Notifications.js";
 import Bills from "./Bills.js";
 import axios from "axios";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import MemberSideBar from "./MemberSideBar.js";
+import Offcanvas from "react-bootstrap/Offcanvas";
 
 export default function MemberDashboard(props) {
   const storage = getStorage();
-  const [view, setView] = useState("Profile");  //initialize the view of the page, defaulted to "profile"
+  const [view, setView] = useState("Profile"); //initialize the view of the page, defaulted to "profile"
   const [dietData, setDietData] = useState(null); //initialize the state of the diet data object to null
+  const [profilePicUrl, setProfilePicUrl] = useState(null);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  function showSideBar() {
+    handleShow();
+  }
 
   useEffect(() => {
     // get user diet details from database
@@ -35,14 +46,13 @@ export default function MemberDashboard(props) {
     // set profile picture img src attribute by getting the URL from firebase storage
     getDownloadURL(ref(storage, `profile-pics/${props.userData.uid}`))
       .then((url) => {
-        const img = document.getElementById("profile-pic");
-        img.setAttribute("src", url);
+        setProfilePicUrl(url);
       })
       .catch((error) => {
         console.log(error);
         //otherwise, set profile picture as blank
-        const img = document.getElementById("profile-pic");
-        img.setAttribute("src", "/img/blank_profile.jpg");
+
+        setProfilePicUrl("/img/blank_profile.jpg");
       });
   }, [props.userData.uid, storage]);
 
@@ -62,54 +72,16 @@ export default function MemberDashboard(props) {
 
   return (
     <div>
-      <NavBar />
+      <NavBar showSideBar={showSideBar} />
       <div>
-        <div className="sidebar">
-          <div className="text-center" style={{ marginTop: "30px" }}>
-            <img
-              alt="profile-pic"
-              id="profile-pic"
-              width={100}
-              height={100}
-              style={{ borderRadius: "100px" }}
-            ></img>
-          </div>
-          <div className="user-welcome">
-            Welcome, <br />
-            {props.userData.fname}
-          </div>
-          <hr />
-          <div
-            className={view === "Profile" ? "active" : undefined}
-            onClick={selectView}
-          >
-            Profile
-          </div>
-          <div
-            className={view === "Notifications" ? "active" : undefined}
-            onClick={selectView}
-          >
-            Notifications
-          </div>
-          <div
-            className={view === "Bills" ? "active" : undefined}
-            onClick={selectView}
-          >
-            Bills
-          </div>
-          <div
-            className={view === "Plans" ? "active" : undefined}
-            onClick={selectView}
-          >
-            Plans
-          </div>
-          <div
-            className={view === "About" ? "active" : undefined}
-            onClick={selectView}
-          >
-            About
-          </div>
-        </div>
+        <MemberSideBar
+          selectView={selectView}
+          view={view}
+          userData={props.userData}
+          handleClose={() => {}}
+          profilePicUrl={profilePicUrl}
+          sideBarResponsive={"sidebar"}
+        />
         <div className="main-screen">
           {view === "Profile" && (
             <Profile userData={props.userData} dietData={dietData} />
@@ -122,6 +94,16 @@ export default function MemberDashboard(props) {
           {view === "About" && <About />}
         </div>
       </div>
+      <Offcanvas show={show} onHide={handleClose} style={{ width: "70%" }}>
+        <MemberSideBar
+          userData={props.userData}
+          view={view}
+          selectView={selectView}
+          handleClose={handleClose}
+          profilePicUrl={profilePicUrl}
+          sideBarResponsive={"sidebar-responsive"}
+        />
+      </Offcanvas>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import ReactLoading from "react-loading";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import generatePDF from "react-to-pdf";
+import { Card } from "react-bootstrap";
 
 export default function MembersList(props) {
   //this view is for Admin only, where he/she can edit member data and remove members
@@ -55,42 +56,75 @@ export default function MembersList(props) {
         onClick={() => generatePDF(targetRef, { filename: "members.pdf" })}
       >
         Save PDF
-      </button>
+      </button>{" "}
+      <br />
       <div>
         {memberData !== null ? (
-          <table className="members-table" ref={targetRef}>
-            <tbody>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone No.</th>
-                <th>Actions</th>
-              </tr>
-              {memberData.map((item) => {
-                return (
-                  <tr key={item.uid}>
-                    <td>{item.fname + " " + item.lname}</td>
-                    <td>{item.email}</td>
-                    <td>{item.phoneNumber}</td>
-                    <td style={{ textAlign: "center" }}>
-                      <button
-                        className="btn-members"
-                        onClick={() => editMember(item)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="btn-members"
-                        onClick={() => removeMember(item.uid)}
-                      >
-                        Remove
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <div>
+            <table className="members-table" ref={targetRef}>
+              <tbody>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone No.</th>
+                  <th>Actions</th>
+                </tr>
+                {memberData.map((item) => {
+                  return (
+                    <tr key={item.uid} className="members-row">
+                      <td>{item.fname + " " + item.lname}</td>
+                      <td>{item.email}</td>
+                      <td>{item.phoneNumber}</td>
+                      <td style={{ textAlign: "center" }}>
+                        <button
+                          className="btn-members"
+                          onClick={() => editMember(item)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="btn-members"
+                          onClick={() => removeMember(item.uid)}
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            {memberData.map((item) => {
+              return (
+                <Card
+                  key={item.uid}
+                  className="members-card"
+                  style={{ width: "100%", marginBottom: "20px" }}
+                >
+                  <Card.Body>
+                    <span>Name: {item.fname + " " + item.lname}</span> <br />
+                    <span>Email: {item.email}</span>
+                    <br />
+                    <span>Phone: {item.phoneNumber}</span>
+                    <br />
+                    <button
+                      style={{ marginTop: "20px" }}
+                      className="btn-members"
+                      onClick={() => editMember(item)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn-members"
+                      onClick={() => removeMember(item.uid)}
+                    >
+                      Remove
+                    </button>
+                  </Card.Body>
+                </Card>
+              );
+            })}
+          </div>
         ) : (
           <ReactLoading
             type="bubbles"

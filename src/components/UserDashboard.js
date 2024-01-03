@@ -5,11 +5,22 @@ import Profile from "./Profile.js";
 import Plans from "./Plans.js";
 import About from "./About.js";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import Offcanvas from "react-bootstrap/Offcanvas";
+import UserSideBar from "./UserSideBar.js";
 
 export default function UserDashboard(props) {
   // please see MemberDashboard.js for explanation
   const [view, setView] = useState("Profile");
   const storage = getStorage();
+  const [profilePicUrl, setProfilePicUrl] = useState(null);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  function showSideBar() {
+    handleShow();
+  }
 
   function selectView(e) {
     console.log(e.target.innerHTML);
@@ -19,60 +30,42 @@ export default function UserDashboard(props) {
   useEffect(() => {
     getDownloadURL(ref(storage, `profile-pics/${props.userData.uid}`))
       .then((url) => {
-        const img = document.getElementById("profile-pic");
-        img.setAttribute("src", url);
+        setProfilePicUrl(url);
       })
       .catch((error) => {
         console.log(error);
-        const img = document.getElementById("profile-pic");
-        img.setAttribute("src", "/img/blank_profile.jpg");
+        setProfilePicUrl("/img/blank_profile.jpg");
       });
   }, [props.userData.uid, storage]);
 
   return (
     <div>
-      <NavBar />
+      <NavBar showSideBar={showSideBar} />
       <div>
-        <div className="sidebar">
-          <div className="text-center" style={{ marginTop: "30px" }}>
-            <img
-              alt="profile-pic"
-              id="profile-pic"
-              width={100}
-              height={100}
-              style={{ borderRadius: "100px" }}
-            ></img>
-          </div>
-          <div className="user-welcome">
-            Welcome, <br />
-            {props.userData.fname}
-          </div>
-          <hr />
-          <div
-            className={view === "Profile" ? "active" : undefined}
-            onClick={selectView}
-          >
-            Profile
-          </div>
-          <div
-            className={view === "Plans" ? "active" : undefined}
-            onClick={selectView}
-          >
-            Plans
-          </div>
-          <div
-            className={view === "About" ? "active" : undefined}
-            onClick={selectView}
-          >
-            About
-          </div>
-        </div>
+        <UserSideBar
+          selectView={selectView}
+          view={view}
+          userData={props.userData}
+          handleClose={() => {}}
+          profilePicUrl={profilePicUrl}
+          sideBarResponsive={"sidebar"}
+        />
         <div className="main-screen">
           {view === "Profile" && <Profile userData={props.userData} />}
           {view === "Plans" && <Plans userData={props.userData} />}
           {view === "About" && <About />}
         </div>
       </div>
+      <Offcanvas show={show} onHide={handleClose} style={{ width: "70%" }}>
+        <UserSideBar
+          userData={props.userData}
+          view={view}
+          selectView={selectView}
+          handleClose={handleClose}
+          profilePicUrl={profilePicUrl}
+          sideBarResponsive={"sidebar-responsive"}
+        />
+      </Offcanvas>
     </div>
   );
 }

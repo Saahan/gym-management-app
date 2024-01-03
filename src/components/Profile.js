@@ -49,9 +49,10 @@ export default function Profile(props) {
           Selected Plan:{" "}
           {props.userData.plan === "" ? "N/A" : props.userData.plan}
         </p>
-      </div> <hr/>
+      </div>
       {props.userData.accountType === "member" && props.dietData !== null && (
         <div>
+          <hr />
           <h5>Diet Details:</h5>
           <div className="profile-div">
             <p>Breakfast: {props.dietData.breakfast}</p>

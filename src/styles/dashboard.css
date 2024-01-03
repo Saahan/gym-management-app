@@ -68,3 +68,53 @@
   font-weight: bold;
   font-size: larger;
 }
+
+.hamburger-button {
+  background-color: rgb(209, 100, 50) !important;
+  border: none !important;
+  margin-right: 20px;
+  display: none;
+}
+
+@media only screen and (max-device-width: 480px) {
+  .hamburger-button {
+    display: inline-block;
+  }
+
+  .sidebar-responsive {
+    margin: 0;
+    padding: 40px 0px 0px 0px;
+    width: 100%;
+    background-color: #f1f1f1;
+    height: 100%;
+    overflow: auto;
+    top: 0px;
+  }
+
+  .sidebar-responsive div:not(:nth-child(1)):not(:nth-child(2)) {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .sidebar-responsive div.active {
+    background-color: rgb(209, 100, 50);
+    color: white !important;
+  }
+
+  .sidebar-responsive
+    div:hover:not(.active):not(:nth-child(1)):not(:nth-child(2)) {
+    background-color: #555;
+    color: white;
+  }
+
+  .main-screen {
+    margin: auto;
+  }
+
+  .sidebar {
+    display: none;
+  }
+}

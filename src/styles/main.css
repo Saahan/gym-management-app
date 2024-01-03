@@ -37,3 +37,15 @@
 .return-link {
   color: rgb(216, 119, 75);
 }
+
+/* Media Queries */
+
+@media only screen and (max-device-width: 480px) {
+  .main-container {
+    width: 300px;
+  }
+
+  .button {
+    width: 260px;
+  }
+}

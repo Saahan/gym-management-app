@@ -9,11 +9,22 @@ import AddMembers from "./AddMembers.js";
 import SupplementStore from "./SupplementStore.js";
 import ReactLoading from "react-loading";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import AdminSideBar from "./AdminSideBar.js";
+import Offcanvas from "react-bootstrap/Offcanvas";
 
 export default function AdminDashboard(props) {
   // please see MemberDashboard.js for explanation
   const storage = getStorage();
   const [view, setView] = useState("Profile");
+  const [profilePicUrl, setProfilePicUrl] = useState(null);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  function showSideBar() {
+    handleShow();
+  }
 
   function selectView(e) {
     console.log(e.target.innerHTML);
@@ -23,13 +34,11 @@ export default function AdminDashboard(props) {
   useEffect(() => {
     getDownloadURL(ref(storage, `profile-pics/${props.userData.uid}`))
       .then((url) => {
-        const img = document.getElementById("profile-pic");
-        img.setAttribute("src", url);
+        setProfilePicUrl(url);
       })
       .catch((error) => {
         console.log(error);
-        const img = document.getElementById("profile-pic");
-        img.setAttribute("src", "/img/blank_profile.jpg");
+        setProfilePicUrl("/img/blank_profile.jpg");
       });
   }, [props.userData.uid, storage]);
 
@@ -42,60 +51,16 @@ export default function AdminDashboard(props) {
 
   return (
     <div>
-      <NavBar />
+      <NavBar showSideBar={showSideBar} />
       <div>
-        <div className="sidebar">
-          <div className="text-center" style={{ marginTop: "30px" }}>
-            <img
-              alt="profile-pic"
-              id="profile-pic"
-              width={100}
-              height={100}
-              style={{ borderRadius: "100px" }}
-            ></img>
-          </div>
-          <div className="user-welcome">
-            Welcome, <br />
-            {props.userData.fname}
-          </div>
-          <hr />
-          <div
-            className={view === "Profile" ? "active" : undefined}
-            onClick={selectView}
-          >
-            Profile
-          </div>
-          <div
-            className={view === "Members" ? "active" : undefined}
-            onClick={selectView}
-          >
-            Members
-          </div>
-          <div
-            className={view === "Add Members" ? "active" : undefined}
-            onClick={selectView}
-          >
-            Add Members
-          </div>
-          <div
-            className={view === "Create Bills" ? "active" : undefined}
-            onClick={selectView}
-          >
-            Create Bills
-          </div>
-          <div
-            className={view === "Diet" ? "active" : undefined}
-            onClick={selectView}
-          >
-            Diet
-          </div>
-          <div
-            className={view === "Store Management" ? "active" : undefined}
-            onClick={selectView}
-          >
-            Store Management
-          </div>
-        </div>
+        <AdminSideBar
+          selectView={selectView}
+          view={view}
+          userData={props.userData}
+          handleClose={() => {}}
+          profilePicUrl={profilePicUrl}
+          sideBarResponsive={"sidebar"}
+        />
         <div className="main-screen">
           {view === "Profile" && <Profile userData={props.userData} />}
           {view === "Members" && <MembersList refresh={refresh} />}
@@ -112,6 +77,16 @@ export default function AdminDashboard(props) {
           )}
         </div>
       </div>
+      <Offcanvas show={show} onHide={handleClose} style={{ width: "70%" }}>
+        <AdminSideBar
+          userData={props.userData}
+          view={view}
+          selectView={selectView}
+          handleClose={handleClose}
+          profilePicUrl={profilePicUrl}
+          sideBarResponsive={"sidebar-responsive"}
+        />
+      </Offcanvas>
     </div>
   );
 }

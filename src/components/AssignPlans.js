@@ -4,6 +4,7 @@ import axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import ReactLoading from "react-loading";
+import { Card } from "react-bootstrap";
 
 export default function AssignPlans() {
   // this is an admin-only view where the admin can assign a diet plan to the member
@@ -43,33 +44,59 @@ export default function AssignPlans() {
     <div className="container">
       <h1>Diet Allocation:</h1> <hr />
       {memberData !== null ? (
-        <table className="members-table">
-          <tbody>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Actions</th>
-            </tr>
-            {memberData.map((item) => {
-              return (
-                <tr key={item.uid}>
-                  <td>{item.fname + " " + item.lname}</td>
-                  <td>{item.email}</td>
-                  <td style={{ textAlign: "center" }}>
-                    <button
-                      className="btn-members"
-                      onClick={() => {
-                        dietDetails(item);
-                      }}
-                    >
-                      Diet
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div>
+          <table className="members-table">
+            <tbody>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+              </tr>
+              {memberData.map((item) => {
+                return (
+                  <tr key={item.uid}>
+                    <td>{item.fname + " " + item.lname}</td>
+                    <td>{item.email}</td>
+                    <td style={{ textAlign: "center" }}>
+                      <button
+                        className="btn-members"
+                        onClick={() => {
+                          dietDetails(item);
+                        }}
+                      >
+                        Diet
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          {memberData.map((item) => {
+            return (
+              <Card
+                key={item.uid}
+                className="members-card"
+                style={{ width: "100%", marginBottom: "20px" }}
+              >
+                <Card.Body>
+                  <span>Name: {item.fname + " " + item.lname}</span> <br />
+                  <span>Email: {item.email}</span>
+                  <br />
+                  <button
+                    style={{ marginTop: "20px" }}
+                    className="btn-members"
+                    onClick={() => {
+                      dietDetails(item);
+                    }}
+                  >
+                    Diet
+                  </button>
+                </Card.Body>
+              </Card>
+            );
+          })}
+        </div>
       ) : (
         <ReactLoading
           type="bubbles"
