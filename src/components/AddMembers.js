@@ -9,7 +9,7 @@ export default function AddMembers(props) {
   const [userList, setUserList] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/userlist").then((docs) => {
+    axios.get("https://gym-management-app-api.onrender.com/api/userlist").then((docs) => {
       console.log(docs.data);
       setUserList(docs.data);
     });
@@ -18,7 +18,7 @@ export default function AddMembers(props) {
   function allotMembership(uid) {
     axios({
       method: "put",
-      url: "http://localhost:5000/api/allotmembership",
+      url: "https://gym-management-app-api.onrender.com/api/allotmembership",
       data: {
         uid: uid,
       },

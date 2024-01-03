@@ -25,7 +25,7 @@ export default function App() {
         setPriveleges("");
         console.log("app useffect run:", user);
         axios
-          .get("http://localhost:5000/api/userdetails", {
+          .get("https://gym-management-app-api.onrender.com/api/userdetails", {
             params: {
               user: user.uid,
             },

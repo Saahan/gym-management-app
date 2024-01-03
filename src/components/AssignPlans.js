@@ -17,7 +17,7 @@ export default function AssignPlans() {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/memberdetails").then((docs) => {
+    axios.get("https://gym-management-app-api.onrender.com/api/memberdetails").then((docs) => {
       console.log("user details useffect", docs.data);
       setMemberData(docs.data);
     });
@@ -29,7 +29,7 @@ export default function AssignPlans() {
     setModalData(member);
     setModalDietData([]);
     axios
-      .get("http://localhost:5000/api/dietdetails", {
+      .get("https://gym-management-app-api.onrender.com/api/dietdetails", {
         params: {
           uid: member.uid,
         },
@@ -120,7 +120,7 @@ function DietModal(props) {
     e.preventDefault();
     axios({
       method: "put",
-      url: "http://localhost:5000/api/updatedietdetails",
+      url: "https://gym-management-app-api.onrender.com/api/updatedietdetails",
       data: {
         uid: props.modalData.uid,
         breakfast: e.target[1].value,

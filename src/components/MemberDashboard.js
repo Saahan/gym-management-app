@@ -28,7 +28,7 @@ export default function MemberDashboard(props) {
   useEffect(() => {
     // get user diet details from database
     axios
-      .get("http://localhost:5000/api/dietdetails", {
+      .get("https://gym-management-app-api.onrender.com/api/dietdetails", {
         params: {
           uid: props.userData.uid,
         },

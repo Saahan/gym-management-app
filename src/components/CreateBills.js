@@ -11,7 +11,7 @@ export default function CreateBills() {
 
   useEffect(() => {
     //get a list of members
-    axios.get("http://localhost:5000/api/memberdetails").then((docs) => {
+    axios.get("https://gym-management-app-api.onrender.com/api/memberdetails").then((docs) => {
       console.log("member list data:", docs.data);
       setMemberData(docs.data);
     });
@@ -22,7 +22,7 @@ export default function CreateBills() {
     //post bills data to the backend
     axios({
       method: "post",
-      url: "http://localhost:5000/api/addbillitem",
+      url: "https://gym-management-app-api.onrender.com/api/addbillitem",
       data: {
         uid: e.target[0].value,
         amount: e.target[1].value,

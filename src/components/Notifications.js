@@ -11,7 +11,7 @@ export default function Notifications(props) {
   useEffect(() => {
     //get notifications data from the backend database and save it as a state to be mapped in the return statement
     axios
-      .get("http://localhost:5000/api/usernotifications", {
+      .get("https://gym-management-app-api.onrender.com/api/usernotifications", {
         params: { uid: props.userData.uid },
       })
       .then((res) => {
@@ -23,7 +23,7 @@ export default function Notifications(props) {
     // this function allows to clear the notification array in the database
     axios({
       method: "put",
-      url: "http://localhost:5000/api/clearnotifications",
+      url: "https://gym-management-app-api.onrender.com/api/clearnotifications",
       data: {
         uid: props.userData.uid,
       },

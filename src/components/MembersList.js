@@ -19,7 +19,7 @@ export default function MembersList(props) {
 
   useEffect(() => {
     //get a list of members from the database, so that the admin can change
-    axios.get("http://localhost:5000/api/memberdetails").then((docs) => {
+    axios.get("https://gym-management-app-api.onrender.com/api/memberdetails").then((docs) => {
       console.log("member list data:", docs.data);
       setMemberData(docs.data);
     });
@@ -36,7 +36,7 @@ export default function MembersList(props) {
     //remove a member by sending the member uid to the backend and changing the accountType of the user to "guest"
     axios({
       method: "put",
-      url: "http://localhost:5000/api/cancelmembership",
+      url: "https://gym-management-app-api.onrender.com/api/cancelmembership",
       data: {
         uid: uid,
       },
@@ -152,7 +152,7 @@ function EditModal(props) {
     //console.log(uid);
     axios({
       method: "put",
-      url: "http://localhost:5000/api/updatememberdetails",
+      url: "https://gym-management-app-api.onrender.com/api/updatememberdetails",
       data: {
         fname: e.target[1].value,
         lname: e.target[2].value,
