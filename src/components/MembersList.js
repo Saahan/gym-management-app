@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import generatePDF from "react-to-pdf";
 
 export default function MembersList(props) {
+  //this view is for Admin only, where he/she can edit member data and remove members
   const [memberData, setMemberData] = useState(null);
   const [show, setShow] = useState(false);
   const [modalData, setModalData] = useState([]);
@@ -16,6 +17,7 @@ export default function MembersList(props) {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
+    //get a list of members from the database, so that the admin can change
     axios.get("http://localhost:5000/api/memberdetails").then((docs) => {
       console.log("member list data:", docs.data);
       setMemberData(docs.data);
@@ -23,12 +25,14 @@ export default function MembersList(props) {
   }, []);
 
   function editMember(member) {
+    //edit a member's personal details and also assign a monthly plan to the member.
     console.log(member);
     setModalData(member);
     handleShow();
   }
 
   function removeMember(uid) {
+    //remove a member by sending the member uid to the backend and changing the accountType of the user to "guest"
     axios({
       method: "put",
       url: "http://localhost:5000/api/cancelmembership",

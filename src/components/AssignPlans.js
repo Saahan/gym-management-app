@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import ReactLoading from "react-loading";
 
 export default function AssignPlans() {
+  // this is an admin-only view where the admin can assign a diet plan to the member
   const [memberData, setMemberData] = useState(null);
   const [show, setShow] = useState(false);
   const [modalData, setModalData] = useState([]);
@@ -22,6 +23,7 @@ export default function AssignPlans() {
   }, []);
 
   function dietDetails(member) {
+    //get the existing diet data in the database and render it onto the form in the bootstrap modal. This data can also be edited and saved to the database.
     handleShow();
     setModalData(member);
     setModalDietData([]);
@@ -86,6 +88,7 @@ export default function AssignPlans() {
 }
 
 function DietModal(props) {
+  //a modal which allows to edit the diet data for the member. A "PUT" request is made to the backend to store the edited data.
   function handleSubmit(e) {
     e.preventDefault();
     axios({

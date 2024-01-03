@@ -5,10 +5,12 @@ import ReactLoading from "react-loading";
 import Button from "react-bootstrap/Button";
 
 export default function CreateBills() {
+  //this is an admin-only view which allows the admin to create bills for the member. This action also sends a notification to the user that a bill has been created.
   const [memberData, setMemberData] = useState(null);
   const [doneMessage, setDoneMessage] = useState(false);
 
   useEffect(() => {
+    //get a list of members
     axios.get("http://localhost:5000/api/memberdetails").then((docs) => {
       console.log("member list data:", docs.data);
       setMemberData(docs.data);
@@ -17,6 +19,7 @@ export default function CreateBills() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    //post bills data to the backend
     axios({
       method: "post",
       url: "http://localhost:5000/api/addbillitem",

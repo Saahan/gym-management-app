@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 
 export default function Plans(props) {
+  // a view of the available plans offered by the gym. Can be updated as per gym policies.
   return (
     <div className="container">
       <h1>Plans</h1>

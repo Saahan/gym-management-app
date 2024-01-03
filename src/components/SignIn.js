@@ -11,6 +11,7 @@ export default function SignIn() {
   const [errorText, setErrorText] = useState("");
 
   function handleSignIn(e) {
+    //sign in using firebase
     e.preventDefault();
     let email = e.target[0].value;
     let password = e.target[1].value;

@@ -11,6 +11,7 @@ export default function Profile(props) {
   const navigate = useNavigate();
 
   function handleSubmit(e) {
+    //store profile pics after validation (< 1MB not allowed) in firebase storage, and set the feedback message state accordingly
     e.preventDefault();
     let profilePic = e.target[0].files[0];
     //console.log(e.target[0].files[0]);
@@ -27,6 +28,7 @@ export default function Profile(props) {
   }
 
   return (
+    //render profile and diet details, and allow users to change/upload profile pictures via a form
     <div className="container">
       <h1>Profile</h1> <hr />
       <h5>Personal Details:</h5>

@@ -4,6 +4,7 @@ import generatePDF from "react-to-pdf";
 
 export default function Bills(props) {
   const targetRef = useRef();
+  //props.userData.bills is the array of bills which were created by the admin for the user, this component renders that array in a list
 
   return (
     <div className="container">
@@ -11,7 +12,7 @@ export default function Bills(props) {
       <button
         style={{ float: "right" }}
         className="btn-members"
-        onClick={() => generatePDF(targetRef, { filename: "bills.pdf" })}
+        onClick={() => generatePDF(targetRef, { filename: "bills.pdf" })} //the bill data can be saved as a pdf by the user, using a library called "react-to-pdf", targetRef will be the div that needs to be saved
       >
         Save PDF
       </button>

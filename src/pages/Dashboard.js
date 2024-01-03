@@ -6,6 +6,7 @@ import MemberDashboard from "../components/MemberDashboard.js";
 import ReactLoading from "react-loading";
 
 export default function Dashboard(props) {
+  //render the type of dashboard according to user priveleges, using a switch statement.
   switch (props.privileges) {
     case "user":
       return <UserDashboard userData={props.userData} />;

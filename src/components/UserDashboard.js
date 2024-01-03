@@ -7,6 +7,7 @@ import About from "./About.js";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 export default function UserDashboard(props) {
+  // please see MemberDashboard.js for explanation
   const [view, setView] = useState("Profile");
   const storage = getStorage();
 

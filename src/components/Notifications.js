@@ -9,6 +9,7 @@ export default function Notifications(props) {
   const [notificationsArr, setNotificationsArr] = useState(null);
 
   useEffect(() => {
+    //get notifications data from the backend database and save it as a state to be mapped in the return statement
     axios
       .get("http://localhost:5000/api/usernotifications", {
         params: { uid: props.userData.uid },
@@ -19,6 +20,7 @@ export default function Notifications(props) {
   }, [props.userData.uid]);
 
   function clearNotifications() {
+    // this function allows to clear the notification array in the database
     axios({
       method: "put",
       url: "http://localhost:5000/api/clearnotifications",

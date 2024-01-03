@@ -11,6 +11,7 @@ import ReactLoading from "react-loading";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 export default function AdminDashboard(props) {
+  // please see MemberDashboard.js for explanation
   const storage = getStorage();
   const [view, setView] = useState("Profile");
 

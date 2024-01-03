@@ -18,9 +18,10 @@ export default function App() {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
+    //firebase authentication
     return onAuthStateChanged(auth, (user) => {
       if (user) {
-        setIsAuthenticated(true);
+        setIsAuthenticated(true); //authenticate user if he/she is loggin in
         setPriveleges("");
         console.log("app useffect run:", user);
         axios
@@ -31,9 +32,9 @@ export default function App() {
           })
           .then((res) => {
             //console.log(res.data);
-            setPriveleges(res.data[0].accountType);
-            setUserData(res.data[0]);
-            console.log("env file", process.env);
+            setPriveleges(res.data[0].accountType); //set priveleges as per the type of account, which can be changed by the admin
+            setUserData(res.data[0]); //set user data, which consists of diet details and personal details.
+            //console.log("env file", process.env);
           })
           .catch((err) => {
             console.log(err);
@@ -70,6 +71,7 @@ export default function App() {
           <Route
             path="/dashboard"
             element={
+              //the Protected component only renders its child, the dashboard if the user is authenticated
               <Protected isAuthenticated={isAuthenticated}>
                 <Dashboard privileges={privileges} userData={userData} />
               </Protected>

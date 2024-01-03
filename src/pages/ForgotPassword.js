@@ -6,6 +6,7 @@ import { app } from "../firebase.js";
 import { useNavigate } from "react-router-dom";
 
 export default function ForgotPassword() {
+  //forgot password page which asks the user for an email and then sends a password reset link (courtesy of firebase) to that email.
   const auth = getAuth(app);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();

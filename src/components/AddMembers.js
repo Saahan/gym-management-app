@@ -4,6 +4,7 @@ import axios from "axios";
 import ReactLoading from "react-loading";
 
 export default function AddMembers(props) {
+  // this is an admin-only view which allows the admin to allot a membership to guest users. A guest user account must exist for the admin to add him/her as a member.
   const [userList, setUserList] = useState(null);
 
   useEffect(() => {

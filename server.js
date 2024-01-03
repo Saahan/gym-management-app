@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 var cors = require("cors");
 var _ = require("lodash");
-require('dotenv').config();
+require("dotenv").config();
 
 const app = express();
 
@@ -12,16 +12,14 @@ app.use(bodyParser.json());
 
 app.use(cors()); //enable Access-Control-Origin from all sources using cors package
 
-const port = 5000;
+const port = process.env.port || 5000;
 
 main().catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect(
-    process.env.REACT_APP_MONGODBURL
-  );
+  await mongoose.connect(process.env.REACT_APP_MONGODBURL);
 }
-
+// we create two database Schemas, one for personal details and other for diet details, linked through the uid of the user.
 const gymuserSchema = new mongoose.Schema({
   uid: String,
   email: String,
@@ -45,6 +43,8 @@ const userdietSchema = new mongoose.Schema({
 
 const gymUsers = mongoose.model("gymusers", gymuserSchema);
 const userDiets = mongoose.model("userdiets", userdietSchema);
+
+//requests are self explanatory, basically storing and retrieving data from the database.
 
 app.post("/api/signup", (req, res) => {
   let userDataObj = new gymUsers({
@@ -76,6 +76,7 @@ app.post("/api/addbillitem", (req, res) => {
   //console.log(req.body);
   let today = new Date();
 
+  //whenever a bill item is added by the admin, a notification is sent to the user, with a date corresponding to the time of adding that bill.
   let notification = {
     message: `A bill with invoice number ${req.body.invoiceNumber} was added`,
     date: today,
@@ -199,6 +200,11 @@ app.put("/api/updatedietdetails", (req, res) => {
       };
 
       //console.log(comparableDocs, dietData);
+
+      //whenever the admin changes the diet details of the member, a notification is sent to the member with the date the diet was changed on.
+      //two objects from before and after diet chage are compared, and if there is a difference between the values of any of the respective keys, only then a notification is generated.
+      //i used Lodash to compare objects as the inbuilt javaScript object comparator does not compare different instances of objects.
+
       if (_.isEqual(comparableDocs, dietData)) {
         console.log("same, do not send notification");
       } else {

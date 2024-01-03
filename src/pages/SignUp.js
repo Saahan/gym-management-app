@@ -10,9 +10,10 @@ import validateUserData from "../Functions/validateUserData.js";
 import axios from "axios";
 
 export default function SignUp() {
+  //a usersign up page. When the user intitially signs up, he/she is registered with "guest" priveleges (and appropriate Dashboard view). The admin can then assign "guest" users with membership plans accordingly.
   const auth = getAuth(app);
   const navigate = useNavigate();
-  const [validationText, setValidationText] = useState("");
+  const [validationText, setValidationText] = useState(""); //this is a feedback text state which displays errors to the user.
 
   function handleSignUp(e) {
     e.preventDefault();
@@ -27,10 +28,10 @@ export default function SignUp() {
 
     //console.log(userData);
 
-    let isValidated = validateUserData(userData)[0];
+    let isValidated = validateUserData(userData)[0]; //validate the signup data as per the function exported from the "validateUserData.js" file.
 
     if (isValidated) {
-      createUserWithEmailAndPassword(auth, userData.email, userData.password)
+      createUserWithEmailAndPassword(auth, userData.email, userData.password) //firebase function
         .then((userCredential) => {
           //console.log(userCredential);
           axios({
