@@ -4,6 +4,8 @@ This app provides a management solution to a small scale gym. There are features
 
 The project is hosted live on: https://gym-management-app.onrender.com.
 
+View the system architecture PDF here: https://drive.google.com/file/d/1K833Rkf0SmRymlFFnXmvNC6sRsgXdY4o/view?usp=drive_link
+
 Note: Please wait for a minute or so for the site to load for the first time. Because they are hosted on a free account, the backend services dial down after 15 minutes of inactivity.
 
 ## Features
