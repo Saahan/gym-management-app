@@ -64,7 +64,7 @@ export default function Profile(props) {
         </div>
       )}
       <hr />
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="profile-div">
         <label htmlFor="profile-pic" style={{ marginBottom: "10px" }}>
           Upload/Change Profile Picture:
         </label>{" "}
@@ -80,7 +80,9 @@ export default function Profile(props) {
         </Button>
       </form>
       <hr />
-      {message !== "" && <p style={{ color: "red" }}>{message}</p>}
+      {message !== "" && (
+        <p style={{ color: "red", display: "inline-block" }}>{message}</p>
+      )}
     </div>
   );
 }

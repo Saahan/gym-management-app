@@ -8,14 +8,15 @@ export default function Bills(props) {
 
   return (
     <div className="container">
-      <h1>Bills:</h1> <hr/>
+      <h1>Bills:</h1> <hr />
       <button
-        style={{ float: "right" }}
+        style={{ float: "right", marginBottom: "20px" }}
         className="btn-members"
         onClick={() => generatePDF(targetRef, { filename: "bills.pdf" })} //the bill data can be saved as a pdf by the user, using a library called "react-to-pdf", targetRef will be the div that needs to be saved
       >
         Save PDF
-      </button>
+      </button>{" "}
+      <br /> <br />
       <div className="profile-div" ref={targetRef}>
         {props.userData.bills.length !== 0 ? (
           props.userData.bills.map((item) => {
