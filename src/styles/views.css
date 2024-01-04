@@ -162,7 +162,7 @@ input[type="file"]::file-selector-button:active {
   }
 
   .profile-div {
-    width: 100%;
+    width: 90%;
   }
 
   .generic-gym {
@@ -184,5 +184,9 @@ input[type="file"]::file-selector-button:active {
 
   .members-card {
     display: inline-block;
+  }
+
+  .btn-members {
+    width: auto;
   }
 }
