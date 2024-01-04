@@ -10,6 +10,7 @@ import axios from "axios";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import MemberSideBar from "./MemberSideBar.js";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import { domainName } from "../Functions/portVariable";
 
 export default function MemberDashboard(props) {
   const storage = getStorage();
@@ -28,7 +29,7 @@ export default function MemberDashboard(props) {
   useEffect(() => {
     // get user diet details from database
     axios
-      .get("https://gym-management-app-api.onrender.com/api/dietdetails", {
+      .get(`${domainName}/api/dietdetails`, {
         params: {
           uid: props.userData.uid,
         },

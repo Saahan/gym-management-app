@@ -4,6 +4,7 @@ import ReactTimeAgo from "react-time-ago";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 import ReactLoading from "react-loading";
+import { domainName } from "../Functions/portVariable";
 
 export default function Notifications(props) {
   const [notificationsArr, setNotificationsArr] = useState(null);
@@ -11,7 +12,7 @@ export default function Notifications(props) {
   useEffect(() => {
     //get notifications data from the backend database and save it as a state to be mapped in the return statement
     axios
-      .get("https://gym-management-app-api.onrender.com/api/usernotifications", {
+      .get(`${domainName}/api/usernotifications`, {
         params: { uid: props.userData.uid },
       })
       .then((res) => {
@@ -23,7 +24,7 @@ export default function Notifications(props) {
     // this function allows to clear the notification array in the database
     axios({
       method: "put",
-      url: "https://gym-management-app-api.onrender.com/api/clearnotifications",
+      url: `${domainName}/api/clearnotifications`,
       data: {
         uid: props.userData.uid,
       },

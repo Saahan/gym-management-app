@@ -158,11 +158,11 @@ input[type="file"]::file-selector-button:active {
 
 @media only screen and (max-device-width: 480px) {
   .container {
-    padding: 80px 30px 0px 30px;
+    padding: 80px 20px 0px 20px;
   }
 
   .profile-div {
-    width: 300px;
+    width: 100%;
   }
 
   .generic-gym {

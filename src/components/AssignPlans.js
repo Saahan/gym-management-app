@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import ReactLoading from "react-loading";
 import { Card } from "react-bootstrap";
+import { domainName } from "../Functions/portVariable";
 
 export default function AssignPlans() {
   // this is an admin-only view where the admin can assign a diet plan to the member
@@ -17,7 +18,7 @@ export default function AssignPlans() {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    axios.get("https://gym-management-app-api.onrender.com/api/memberdetails").then((docs) => {
+    axios.get(`${domainName}/api/memberdetails`).then((docs) => {
       console.log("user details useffect", docs.data);
       setMemberData(docs.data);
     });
@@ -29,7 +30,7 @@ export default function AssignPlans() {
     setModalData(member);
     setModalDietData([]);
     axios
-      .get("https://gym-management-app-api.onrender.com/api/dietdetails", {
+      .get(`${domainName}/api/dietdetails`, {
         params: {
           uid: member.uid,
         },
@@ -120,7 +121,7 @@ function DietModal(props) {
     e.preventDefault();
     axios({
       method: "put",
-      url: "https://gym-management-app-api.onrender.com/api/updatedietdetails",
+      url: `${domainName}/api/updatedietdetails`,
       data: {
         uid: props.modalData.uid,
         breakfast: e.target[1].value,

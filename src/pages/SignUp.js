@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import "../styles/main.css";
 import { useNavigate } from "react-router-dom";
 import validateUserData from "../Functions/validateUserData.js";
+import { domainName } from "../Functions/portVariable";
 import axios from "axios";
 
 export default function SignUp() {
@@ -36,7 +37,7 @@ export default function SignUp() {
           //console.log(userCredential);
           axios({
             method: "post",
-            url: "https://gym-management-app-api.onrender.com/api/signup",
+            url: `${domainName}/api/signup`,
             data: {
               uid: userCredential.user.uid,
               fname: userData.fname,

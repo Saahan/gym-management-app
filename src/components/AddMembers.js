@@ -3,13 +3,14 @@ import "../styles/views.css";
 import axios from "axios";
 import ReactLoading from "react-loading";
 import { Card } from "react-bootstrap";
+import { domainName } from "../Functions/portVariable";
 
 export default function AddMembers(props) {
   // this is an admin-only view which allows the admin to allot a membership to guest users. A guest user account must exist for the admin to add him/her as a member.
   const [userList, setUserList] = useState(null);
 
   useEffect(() => {
-    axios.get("https://gym-management-app-api.onrender.com/api/userlist").then((docs) => {
+    axios.get(`${domainName}/api/userlist`).then((docs) => {
       console.log(docs.data);
       setUserList(docs.data);
     });
@@ -18,7 +19,7 @@ export default function AddMembers(props) {
   function allotMembership(uid) {
     axios({
       method: "put",
-      url: "https://gym-management-app-api.onrender.com/api/allotmembership",
+      url: `${domainName}/api/allotmembership`,
       data: {
         uid: uid,
       },

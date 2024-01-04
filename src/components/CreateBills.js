@@ -3,6 +3,7 @@ import "../styles/views.css";
 import axios from "axios";
 import ReactLoading from "react-loading";
 import Button from "react-bootstrap/Button";
+import { domainName } from "../Functions/portVariable";
 
 export default function CreateBills() {
   //this is an admin-only view which allows the admin to create bills for the member. This action also sends a notification to the user that a bill has been created.
@@ -11,7 +12,7 @@ export default function CreateBills() {
 
   useEffect(() => {
     //get a list of members
-    axios.get("https://gym-management-app-api.onrender.com/api/memberdetails").then((docs) => {
+    axios.get(`${domainName}/api/memberdetails`).then((docs) => {
       console.log("member list data:", docs.data);
       setMemberData(docs.data);
     });
@@ -22,7 +23,7 @@ export default function CreateBills() {
     //post bills data to the backend
     axios({
       method: "post",
-      url: "https://gym-management-app-api.onrender.com/api/addbillitem",
+      url: `${domainName}/api/addbillitem`,
       data: {
         uid: e.target[0].value,
         amount: e.target[1].value,

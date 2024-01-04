@@ -6,6 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import generatePDF from "react-to-pdf";
 import { Card } from "react-bootstrap";
+import { domainName } from "../Functions/portVariable";
 
 export default function MembersList(props) {
   //this view is for Admin only, where he/she can edit member data and remove members
@@ -19,7 +20,7 @@ export default function MembersList(props) {
 
   useEffect(() => {
     //get a list of members from the database, so that the admin can change
-    axios.get("https://gym-management-app-api.onrender.com/api/memberdetails").then((docs) => {
+    axios.get(`${domainName}/api/memberdetails`).then((docs) => {
       console.log("member list data:", docs.data);
       setMemberData(docs.data);
     });
@@ -36,7 +37,7 @@ export default function MembersList(props) {
     //remove a member by sending the member uid to the backend and changing the accountType of the user to "guest"
     axios({
       method: "put",
-      url: "https://gym-management-app-api.onrender.com/api/cancelmembership",
+      url: `${domainName}/api/cancelmembership`,
       data: {
         uid: uid,
       },
@@ -152,7 +153,7 @@ function EditModal(props) {
     //console.log(uid);
     axios({
       method: "put",
-      url: "https://gym-management-app-api.onrender.com/api/updatememberdetails",
+      url: `${domainName}/api/updatememberdetails`,
       data: {
         fname: e.target[1].value,
         lname: e.target[2].value,

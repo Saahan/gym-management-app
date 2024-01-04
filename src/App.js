@@ -10,6 +10,7 @@ import Protected from "./components/Protected.js";
 import ReactLoading from "react-loading";
 import AccountCreated from "./pages/AccountCreated.js";
 import ForgotPassword from "./pages/ForgotPassword.js";
+import { domainName } from "./Functions/portVariable";
 
 export default function App() {
   const auth = getAuth(app);
@@ -25,7 +26,7 @@ export default function App() {
         setPriveleges("");
         console.log("app useffect run:", user);
         axios
-          .get("https://gym-management-app-api.onrender.com/api/userdetails", {
+          .get(`${domainName}/api/userdetails`, {
             params: {
               user: user.uid,
             },
