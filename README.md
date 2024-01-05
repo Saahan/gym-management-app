@@ -4,6 +4,9 @@ This app provides a management solution to a small scale gym. There are features
 
 The project is hosted live on: https://gym-management-app.onrender.com.
 
+Admin Account: admin@admin.ca, password: sdsam123
+Note: Admin account cannot be created from the sign-up page, it can only be assigned from the back-end by the developer currently. Please use the above account to check out the admin route of the app.
+
 View the system architecture PDF here: https://drive.google.com/file/d/1bDX0uR_XUWBJk5P6BTfiHfNvZNBPtUkh/view?usp=drive_link
 
 Note: Please wait for a minute or so for the site to load for the first time. Because they are hosted on a free account, the backend services dial down after 15 minutes of inactivity.
